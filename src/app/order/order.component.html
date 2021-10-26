@@ -1,0 +1,167 @@
+<app-nav></app-nav>
+<br><br><br>
+<div class="limiter">
+  <div class="container-table100">
+    <div class="wrap-table100">
+      <div class="table100">
+        <table>
+          <thead>
+          <tr class="table100-head">
+            <th class="column1">CODE</th>
+            <th class="column1">DATE REGISTERED</th>
+            <th class="column1">CUSTOMER</th>
+            <th class="column1">CREATOR</th>
+            <th class="column1">Check / Change</th>
+            <th class="column1">Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let order of orders">
+            <td class="column1">P-{{order.code}}-{{order.code_year}}</td>
+            <td class="column1">{{order.date_registered.toString().slice(0, 10)}}</td>
+            <td class="column1">{{getCustomerById(order.customer)}}</td>
+            <td class="column1">{{getCreatorById(order.creator)}}</td>
+            <td class="column1">
+              <button class="delete" title="update customer" name="change"
+                      [class.selected]="order === selectedOrder"
+                      (click)="onSelect(order)">
+                Check / Change
+              </button>
+            </td>
+            <td class="column8">
+              <button class="delete" title="delete customer"
+                      (click)="deleteOrder(order.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <br><br><br>
+        <h2>
+          <button class="button-left-class" title="create new" name="create"
+                  (click)="onCreate()">START NEW ORDER
+          </button>
+        </h2>
+        <br><br>
+
+        <div *ngIf="createNewVar">
+          <table>
+            <thead>
+            <tr class="table100-head">
+              <th class="column1">CODE</th>
+              <th class="column1">DATE REGISTERED</th>
+              <th class="column1">CUSTOMER</th>
+              <th class="column1">CREATOR</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table100-head">
+              <td class="column1">P-{{newOrder.code}}-{{newOrder.code_year}}</td>
+              <td class="column1">{{newOrder.date_registered.toString().slice(0, -51)}}</td>
+              <td class="column1">
+                <select #selCust [(ngModel)]="selectedCust">
+                  <option *ngFor="let cust of customers" [value]="cust.id">{{cust.first_name}}</option>
+                </select>
+              </td>
+              <td class="column1">{{currUser}}</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <br>
+
+          <table>
+            <tbody>
+            <tr *ngFor="let unit of orderUnitsForCreate">
+              <td class="column1">
+                <select [(ngModel)]="unit.product">
+                  <option *ngFor="let prod of products" [value]="prod.id">{{prod.name}}</option>
+                </select>
+              </td>
+              <td class="column1">
+                <input [(ngModel)]="unit.amount" placeholder="amount integer"/>
+              </td>
+              <td class="column1">
+                <input [contentEditable]="false" [(ngModel)]="unit.price" placeholder="price integer" />
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <h2>
+            <button class="button-left-class" (click)="orderUnitsForCreate.push(getNewOrderUnit(counter))">ADD ANOTHER ROW</button>
+            <button class="button-right-class" (click)="saveOrder()">SAVE ORDER</button>
+          </h2>
+          <br><br><br>
+        </div>
+
+        <br><br><br>
+
+        <div *ngIf="selectedOrder">
+          <table>
+            <thead>
+            <tr class="table100-head">
+              <th class="column1">CODE</th>
+              <th class="column1">CODE YEAR</th>
+              <th class="column1">DATE REGISTERED</th>
+              <th class="column1">CUSTOMER</th>
+              <th class="column1">CREATOR</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table100-head">
+              <td class="column1">{{selectedOrder.code}}</td>
+              <td class="column1">{{selectedOrder.code_year}}</td>
+              <td class="column1">{{selectedOrder.date_registered.toString().slice(0, 10)}}</td>
+              <td class="column1">{{getCustomerById(selectedOrder.customer)}}</td>
+              <td class="column1">{{getCreatorById(selectedOrder.creator)}}</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <br>
+
+          <table>
+            <thead>
+            <tr class="table100-head">
+              <th class="column1">PRODUCT</th>
+              <th class="column1">AMOUNT</th>
+              <th class="column1">PRICE</th>
+              <th class="column1">DELETE</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let unit of orderUnitsForUpdate">
+              <td class="column1">
+                <select [(ngModel)]="unit.product">
+                  <option *ngFor="let prod of products" [value]="prod.id">{{prod.name}}</option>
+                </select>
+              </td>
+              <td class="column1">
+                <input [(ngModel)]="unit.amount" placeholder="amount integer"/>
+              </td>
+              <td class="column1">
+                <input [contentEditable]="false" [value]="getPriceById(unit.product)" placeholder="price" readonly/>
+              </td>
+              <td class="column8">
+                <button class="delete" title="delete customer"
+                        (click)="deleteUnit(unit.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <h2>
+            <button class="button-left-class" (click)="orderUnitsForUpdate.push(getNewOrderUnit(selectedOrder.id))">
+              ADD ANOTHER ROW</button>
+            <button class="button-right-class" (click)="updateOrder()">SAVE CHANGES</button>
+          </h2>
+          <br><br><br>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

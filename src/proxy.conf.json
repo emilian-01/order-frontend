@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "https://brave-newton-26c41a.netlify.app",
+    "secure": false
+  }
+}

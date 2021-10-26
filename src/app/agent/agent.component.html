@@ -1,0 +1,128 @@
+<app-nav></app-nav>
+<br><br><br>
+<div class="limiter">
+  <div class="container-table100">
+    <div class="wrap-table100">
+      <div class="table100">
+        <table>
+          <thead>
+          <tr class="table100-head">
+            <th class="column1">ID</th>
+            <th class="column2">First Name</th>
+            <th class="column3">Last Name</th>
+            <th class="column4">Company Name</th>
+            <th class="column4">Change</th>
+            <th class="column4">Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let customer of customers">
+            <td class="column1">{{customer.id}}</td>
+            <td class="column1">{{customer.first_name}}</td>
+            <td class="column1">{{customer.last_name}}</td>
+            <td class="column1">{{customer.company_name}}</td>
+            <td class="column4">
+              <button class="delete" title="update customer" name="change"
+                      [class.selected]="customer === selectedCustomer"
+                      (click)="onSelect(customer)">
+                Change
+              </button>
+            </td>
+            <td class="column4">
+              <button class="delete" title="delete customer"
+                      (click)="deleteCustomer(customer.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <br><br><br>
+        <h2>
+          <button class="button-left-class" title="create new" name="create"
+                  (click)="onCreate()">ADD NEW CUSTOMER
+          </button>
+        </h2>
+        <br><br>
+
+        <div *ngIf="createNewVar">
+          <table>
+            <thead>
+            <tr class="table100-head">
+              <th class="column1">CREATE NEW CUSTOMER</th>
+              <th>
+                <button (click)="createCustomer(fname.value, lname.value, cname.value)">CREATE</button>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="column1">First Name</td>
+              <td class="column1">
+                <input #fname placeholder="first name"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Last Name</td>
+              <td class="column1">
+                <input #lname placeholder="last name"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Company Name</td>
+              <td class="column1">
+                <input #cname placeholder="company name"/>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <br><br><br>
+        </div>
+
+        <div *ngIf="selectedCustomer">
+          <table>
+            <thead>
+            <tr class="table100-head">
+              <th class="column1">EDIT CUSTOMER WITH ID {{selectedCustomer.id}}</th>
+              <th>
+                <button (click)="updateCustomer(selectedCustomer)">SAVE</button>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="column1">First Name</td>
+              <td class="column1">
+                <input id="fn"
+                       [(ngModel)]="selectedCustomer.first_name"
+                       value="{{selectedCustomer.first_name}}"
+                       placeholder="first name"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Last Name</td>
+              <td class="column1">
+                <input id="ln"
+                       [(ngModel)]="selectedCustomer.last_name"
+                       value="{{selectedCustomer.last_name}}"
+                       placeholder="last name"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Company Name</td>
+              <td class="column1">
+                <input id="cn"
+                       [(ngModel)]="selectedCustomer.company_name"
+                       value="{{selectedCustomer.company_name}}"
+                       placeholder="company name"/>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

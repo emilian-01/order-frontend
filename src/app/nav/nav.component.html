@@ -1,0 +1,16 @@
+<div class="header header-fixed">
+  <div class="navbar container">
+    <div class="logo"><a routerLink=""> {{navName}}</a></div>
+    <input type="checkbox" id="navbar-toggle" >
+    <label for="navbar-toggle"><i></i></label>
+    <nav class="menu">
+      <ul>
+        <li><a routerLink="/customer">Clients</a></li>
+        <li><a href="/orders">Orders</a></li>
+        <li><a routerLink="/products">Products</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a (click)="logOut()" >Log Out</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>

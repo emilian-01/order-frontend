@@ -1,0 +1,132 @@
+<app-nav></app-nav>
+<br><br><br>
+
+<div class="limiter">
+  <div class="container-table100">
+    <div class="wrap-table100">
+      <h1 id="only-admins" *ngIf="!users" >Only Admins can access this page!</h1>
+      <div class="table100" *ngIf="users" >
+        <table>
+          <thead>
+          <tr class="table100-head">
+            <th class="column1">ID</th>
+            <th class="column2">IS ADMIN</th>
+            <th class="column3">USERNAME</th>
+            <th class="column4">EMAIL</th>
+            <th class="column4">IS ACTIVE</th>
+            <th class="column4">Change</th>
+            <th class="column4">Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of users">
+            <td class="column1">{{user.id}}</td>
+            <td class="column1">{{user.is_superuser}}</td>
+            <td class="column1">{{user.username}}</td>
+            <td class="column1">{{user.email}}</td>
+            <td class="column1">{{user.is_active}}</td>
+            <td class="column4">
+              <button class="delete" title="update customer" name="change"
+                      [class.selected]="user === selectedUser"
+                      (click)="onSelect(user)">
+                Change
+              </button>
+            </td>
+            <td class="column4">
+              <button class="delete" title="delete customer"
+                      (click)="deleteUser(user.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <br><br><br>
+        <h2>
+          <button class="button-left-class" title="create new" name="create"
+                  (click)="onCreate()">ADD NEW USER
+          </button>
+        </h2>
+        <br><br>
+
+        <div *ngIf="createNewVar">
+          <table>
+            <thead>
+            <tr class="table100-head">
+              <th class="column1">CREATE NEW USER</th>
+              <th>
+                <button (click)="createUser(uname.value, email.value, pass.value)">CREATE</button>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="column1">USERNAME</td>
+              <td class="column1">
+                <input #uname placeholder="username"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">EMAIL</td>
+              <td class="column1">
+                <input #email placeholder="email"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Password</td>
+              <td class="column1">
+                <input type="password" #pass placeholder="password"/>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <br><br><br>
+        </div>
+
+        <div *ngIf="selectedUser">
+          <table>
+            <thead>
+            <tr class="table100-head">
+              <th class="column1">EDIT CUSTOMER WITH ID {{selectedUser.id}}</th>
+              <th>
+                <button (click)="updateUser(selectedUser)">SAVE</button>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="column1">USERNAME</td>
+              <td class="column1">
+                <input id="fn"
+                       [(ngModel)]="selectedUser.username"
+                       value="{{selectedUser.username}}"
+                       placeholder="first name"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">EMAIL</td>
+              <td class="column1">
+                <input id="ln"
+                       [(ngModel)]="selectedUser.email"
+                       value="{{selectedUser.email}}"
+                       placeholder="email"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">IS ACTIVE</td>
+              <td class="column1">
+                <input id="cn" type="checkbox"
+                       [(ngModel)]="selectedUser.is_active"
+                       value="{{selectedUser.is_active}}"
+                       />
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

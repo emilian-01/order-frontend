@@ -1,0 +1,150 @@
+<app-nav></app-nav>
+<br><br><br>
+<div class="limiter">
+  <div class="container-table100">
+    <div class="wrap-table100">
+      <div class="table100">
+        <table>
+          <thead>
+          <tr class="table100-head">
+            <th class="column1">ID</th>
+            <th class="column2">Name</th>
+            <th class="column3">Default Price</th>
+            <th class="column4">Description</th>
+            <th class="column4">Product Category</th>
+            <th class="column4">Change</th>
+            <th class="column4">Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let product of products">
+            <td class="column1">{{product.id}}</td>
+            <td class="column1">{{product.name}}</td>
+            <td class="column1">{{product.default_price}}</td>
+            <td class="column1">{{product.description}}</td>
+            <td class="column1">
+              <span *ngFor="let pc of product.product_category">{{getCatById(pc)}}</span>
+            </td>
+            <td class="column4">
+              <button class="delete" title="update customer" name="change"
+                      [class.selected]="product === selectedProduct"
+                      (click)="onSelect(product)">
+                Change
+              </button>
+            </td>
+            <td class="column4">
+              <button class="delete" title="delete customer"
+                      (click)="deleteProduct(product.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <br><br><br>
+        <h2>
+          <button class="button-left-class" title="create new" name="create"
+                  (click)="onCreate()">ADD NEW PRODUCT
+          </button>
+        </h2>
+        <br><br>
+
+        <div *ngIf="createNewVar">
+          <table>
+            <thead>
+            <tr class="table100-head">
+              <th class="column1">CREATE NEW PRODUCT</th>
+              <th>
+                <button (click)="createProduct(name.value, dprice.value,
+                description.value)">CREATE
+                </button>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="column1">Product Name</td>
+              <td class="column1">
+                <input #name placeholder="name"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Default Price</td>
+              <td class="column1">
+                <input #dprice placeholder="default price"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Description</td>
+              <td class="column1">
+                <input #description placeholder="description"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Product Categories</td>
+              <td class="column1">
+                <select multiple #selProdCat [(ngModel)]="selectedCats">
+                  <option *ngFor="let prodC of productCategories" [value]="prodC.id">{{prodC.name}}</option>
+                </select>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <br><br><br>
+        </div>
+
+        <div *ngIf="selectedProduct">
+          <table>
+            <thead>
+            <tr class="table100-head">
+              <th class="column1">EDIT CUSTOMER WITH ID {{selectedProduct.id}}</th>
+              <th>
+                <button (click)="updateProduct(selectedProduct)">SAVE</button>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="column1">Product Name</td>
+              <td class="column1">
+                <input id="fn"
+                       [(ngModel)]="selectedProduct.name"
+                       value="{{selectedProduct.name}}"
+                       placeholder="first name"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Default Price</td>
+              <td class="column1">
+                <input id="ln"
+                       [(ngModel)]="selectedProduct.default_price"
+                       value="{{selectedProduct.default_price}}"
+                       placeholder="last name"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Description</td>
+              <td class="column1">
+                <input id="cn"
+                       [(ngModel)]="selectedProduct.description"
+                       value="{{selectedProduct.description}}"
+                       placeholder="company name"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="column1">Product Categories</td>
+              <td class="column1">
+                <select multiple #selProdCat [(ngModel)]="selectedProduct.product_category">
+                  <option *ngFor="let prodC of productCategories" [value]="prodC.id">{{prodC.name}}</option>
+                </select>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
